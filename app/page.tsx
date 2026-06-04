@@ -1,66 +1,45 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import { stripe } from "@/lib/stripe";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Carousel } from "@/components/carousel";
 
-export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+export default async function Home() {
+  const products = await stripe.products.list({
+    expand: ["data.default_price"],
+    limit: 5,
+  });
+
+  console.log(products);
+  return (<div>
+      <section className="rounded bg-neutral-100 py-8 sm:py-12">
+        <div className="mx-auto grid grid-cols-1 items-center justify-items-center gap-8 px-8 sm:px-16 md:grid-cols-2">
+          <div className="max-w-md space-y-4">
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl"> Bem-vindo à nossa loja!</h2> 
+            <p className="text-neutral-600"> Descubra novas tendências, confira os novos produtos de estilo único. </p>
+            <Button 
+              asChild 
+              variant="default"
+              className="inline-flex items-center justify-center rounded-full px-6 py-3 bg-black text-white">
+              <Link 
+                href="/products"
+                className="inline-flex items-center justify-center rounded-full px-6 py-3"> 
+                Explore todos os produtos 
+              </Link>
+            </Button>
+          </div> 
+          <Image 
+            alt="Hero Image" 
+            className="rounded"
+            loading="eager"
+            width={450} 
+            height={450} 
+            src={products.data[0].images[0]}/>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+      </section>
+      <section className="py-8">
+        <Carousel products={products.data} />
+      </section>
+  </div>);
 }
