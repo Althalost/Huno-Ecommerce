@@ -43,8 +43,9 @@ export const useCartStore = create<CartStore>()(
         };
         }),
 
-        clearCart: () => {
-            return {items: [] };
-        }
+        clearCart: () => 
+            set(() => {
+                return { items: [] };
+            }),
     }), {name: "cart"})
 );
