@@ -58,11 +58,13 @@ Create a .env.local file in the root directory and add your Stripe keys:
 ```bash
     npm run dev
 
-
 ## 👨‍💻 Author
 
 **PabloDev**
 - **GitHub:** [@Althalost](https://github.com/Althalost)
 - **LinkedIn:** [Pablo](www.linkedin.com/in/pablo-elias-lópez-marcano-114345208)
+
+**Hero/Lifestyle Images:** Sourced under free license from [Unsplash](https://unsplash.com/). Special thanks to photographers 
+**JC Gellidon** and **Mike Von** for their incredible work.
 
 Concept, Design & Code by PabloDev. Built for portfolio purposes.
