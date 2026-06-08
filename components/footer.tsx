@@ -13,7 +13,7 @@ export const Footer = () => {
             <Link href="/" className="text-white font-black tracking-widest text-xl">
               HUNO
             </Link>
-            <p className="mt-4 text-xs leading-relaxed text-zinc-500 max-w-[240px]">
+            <p className="mt-4 text-xs leading-relaxed text-zinc-500 max-w-60">
               Estilo urbano independente. Peças utilitárias com caimento heavyweight projetadas para o cotidiano.
             </p>
           </div>
@@ -73,7 +73,8 @@ export const Footer = () => {
 
         <div className="border-t border-zinc-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[11px] text-zinc-600 order-2 sm:order-1">
-            &copy; {currentYear} HUNO. Todos os direitos reservados. Projeto Portfólio.
+            &copy; {currentYear} HUNO. Todos os direitos reservados. Projeto Portfólio. 
+            <a href="https://github.com/Althalost" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-400 font-medium transition-colors underline underline-offset-2">PabloDev</a>
           </p>
           
           <div className="flex items-center gap-3 order-1 sm:order-2 opacity-40 grayscale hover:opacity-70 transition-opacity">
