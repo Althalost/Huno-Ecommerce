@@ -4,7 +4,8 @@ import Image from "next/image";
 import Stripe from "stripe";
 import { Button } from "./ui/button";
 import { useCartStore } from "@/store/cart-store";
-import { ShoppingCartIcon } from "@heroicons/react/24/outline"; // Importación limpia de tus íconos
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { ShippingCalculator } from "./shipping-calculator";
 
 interface Props {
   product: Stripe.Product;
@@ -118,6 +119,8 @@ export const ProductDetail = ({ product }: Props) => {
             <p className="text-[11px] text-zinc-400 text-center sm:text-left pt-2">
               📦 Envio imediato para todo o Brasil com código de rastreio.
             </p>
+
+            <ShippingCalculator />
           </div>
 
         </div>
