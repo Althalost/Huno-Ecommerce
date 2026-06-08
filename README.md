@@ -42,21 +42,25 @@ Follow these instructions to set up the project locally on your machine.
 ```bash
     git clone https://github.com/Althalost/Huno-Ecommerce.git
     cd huno-ecommerce
-
+```
 2. **Install dependencies:**
 ```bash
     npm install
+```
 
 3. Set up Environment Variables:
-Create a .env.local file in the root directory and add your Stripe keys:
+```Create a .env.local file in the root directory and add your Stripe keys:
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_public_key
     STRIPE_SECRET_KEY=sk_test_your_secret_key
     MELHOR_ENVIO_TOKEN="your_melhor_envio_token_here"
     CEP_ORIGEM="00000-000""
+```
 
 4. Run the development server:
+
 ```bash
     npm run dev
+```
 
 ## 👨‍💻 Author
 
