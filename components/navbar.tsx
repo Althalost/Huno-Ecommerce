@@ -25,26 +25,26 @@ export const Navbar = () => {
 
     return (
         <nav className="sticky top-0 z-50 bg-white shadow">
-            <div className="container mx-auto flex items-center justify-between py-4 px-4">
-                <Link href="/" className="hover:text-blue-600">
+            <div className="container mx-auto flex items-center justify-between py-6 px-4">
+                <Link href="/" className="hover:text-blue-600 text-4xl leading-0 font-bold">
                     HUNO
                 </Link>
                 <div className="hidden md:flex space-x-6">
-                <Link href="/" className="hover:text-blue-600">
-                    Início
+                <Link href="/" className="hover:text-blue-600 font-medium tracking-wider">
+                    INÍCIO
                 </Link>
-                <Link href="/products" className="hover:text-blue-600">
-                    Produtos
+                <Link href="/products" className="hover:text-blue-600 font-medium tracking-wider">
+                    PRODUTOS
                 </Link>
-                <Link href="/checkout" className="hover:text-blue-600">
-                    Carrinho
+                <Link href="/checkout" className="hover:text-blue-600 font-medium tracking-wider">
+                    CARRINHO
                 </Link>
                 </div>
                 <div className="flex items-center space-x-4">
                     <Link href={"/checkout"} className="relative">
                         <ShoppingCartIcon className="h-6 w-6" />
                         {cartCount > 0 && (
-                            <span className="absolute -top-2 -right-3 flex h-5 w-5 items-center leading-none text-[11px] justify-center rounded-full bg-red-500 text-xs text-white select-none"> 
+                            <span className="absolute -top-2 -right-3 flex h-5 w-5 items-center leading-none text-[11px] justify-center rounded-full bg-zinc-950 text-xs text-white select-none"> 
                                 {cartCount} 
                             </span>
                         )}
