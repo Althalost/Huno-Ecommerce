@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Stripe from "stripe";
 import { Button } from "./ui/button";
@@ -14,16 +15,26 @@ interface Props {
 export const ProductDetail = ({ product }: Props) => {
   const { items, addItem, removeItem } = useCartStore();
   const price = product.default_price as Stripe.Price;
-  const cartItem = items.find((item) => item.id === product.id);
+  
+  const availableSizes = product.metadata?.sizes 
+    ? product.metadata.sizes.split(",") 
+    : ["P", "M", "G", "GG"];
+
+  const [selectedSize, setSelectedSize] = useState<string>(availableSizes[0]);
+
+  const cartItemId = `${product.id}-${selectedSize}`;
+  
+  const cartItem = items.find((item) => item.id === cartItemId);
   const quantity = cartItem ? cartItem.quantity : 0;
 
   const onAddItem = () => {
     addItem({
-      id: product.id,
-      name: product.name,
+      id: cartItemId,
+      name: product.name, 
       price: price.unit_amount as number,
       imageUrl: product.images ? product.images[0] : null,
       quantity: 1,
+      size: selectedSize,
     });
   };
 
@@ -33,16 +44,16 @@ export const ProductDetail = ({ product }: Props) => {
 
   return (
     <main className="w-full max-w-7xl mx-auto px-4 py-8 md:py-16">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-11 gap-8 lg:gap-16 items-start">
         
-        <div className="md:col-span-7 w-full">
+        <div className="md:col-span-5 w-full flex justify-center md:justify-start">
           {product.images && product.images[0] && (
-            <div className="relative aspect-3/4 w-full rounded-2xl overflow-hidden bg-zinc-50 border border-zinc-100 shadow-sm">
+            <div className="relative aspect-square w-full max-w-115 rounded-2xl overflow-hidden bg-zinc-50 border border-zinc-100 shadow-sm">
               <Image 
                 src={product.images[0]} 
                 alt={product.name}
                 fill
-                sizes="(max-width: 768px) 100vw, 55vw"
+                sizes="(max-width: 768px) 100vw, 40vw"
                 loading="eager"
                 className="object-cover transition-transform duration-500 hover:scale-102"
                 priority
@@ -51,7 +62,7 @@ export const ProductDetail = ({ product }: Props) => {
           )}
         </div>
 
-        <div className="md:col-span-5 flex flex-col pt-2">
+        <div className="md:col-span-6 flex flex-col pt-2">
           
           <div className="border-b border-zinc-100 pb-6 mb-6">
             <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 block mb-1">
@@ -66,7 +77,7 @@ export const ProductDetail = ({ product }: Props) => {
           </div>
 
           {product.description && (
-            <div className="mb-8">
+            <div className="mb-6">
               <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-3">
                 Descrição
               </h3>
@@ -75,6 +86,28 @@ export const ProductDetail = ({ product }: Props) => {
               </p>
             </div>
           )}
+
+          <div className="mb-8 pt-4 border-t border-zinc-100">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-3">
+              Tamanho Selecionado: <span className="text-zinc-950 font-black">{selectedSize}</span>
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {availableSizes.map((size) => (
+                <button
+                  key={size}
+                  type="button"
+                  onClick={() => setSelectedSize(size)}
+                  className={`h-11 min-w-12 px-3 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all duration-200 ${
+                    selectedSize === size
+                      ? "bg-zinc-950 text-white border-zinc-950 shadow-sm scale-102"
+                      : "bg-white text-zinc-800 border-zinc-200 hover:border-zinc-400 hover:bg-zinc-50"
+                  }`}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+          </div>
 
           <div className="space-y-4 pt-4 border-t border-zinc-100">
             <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-2">
@@ -88,7 +121,7 @@ export const ProductDetail = ({ product }: Props) => {
                   variant="ghost" 
                   size="icon"
                   className="w-8 h-8 text-zinc-500 hover:text-zinc-950 text-lg rounded-lg transition-colors"
-                  onClick={() => removeItem(product.id)}
+                  onClick={() => removeItem(cartItemId)}
                   disabled={quantity === 0}
                 >
                   -
@@ -126,5 +159,6 @@ export const ProductDetail = ({ product }: Props) => {
         </div>
 
       </div>
-    </main>)
+    </main>
+  );
 };

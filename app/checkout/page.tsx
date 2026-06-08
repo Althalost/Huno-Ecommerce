@@ -28,6 +28,10 @@ export default function checkoutPage() {
                                     <span className="font-medium"> {item.name} </span>
                                     <span className="font-semibold"> R${(item.price * item.quantity / 100).toFixed(2)} </span>
                                 </div>
+                                <div className="flex flex-col">
+                                    <h4 className="font-medium text-sm">{item.name}</h4>
+                                    <span className="text-xs text-zinc-400 uppercase font-medium">Tamanho: {item.size}</span>
+                                </div>
                                 <div className="flex items-center space-x-4">
                                     <Button variant="outline" size="sm" onClick={() => removeItem(item.id)}>-</Button>
                                     <span className="text-lg font-semibold"> {item.quantity} </span>

@@ -1,52 +1,62 @@
 import Image from "next/image";
 import Link from "next/link";
 import Stripe from "stripe";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Button } from "./ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 
 interface Props {
     product: Stripe.Product;
 }
 
-export const ProductCard = ({product}: Props) => {
-
+export const ProductCard = ({ product }: Props) => {
     const price = product.default_price as Stripe.Price;
 
     return (
-            <Link href={`/products/${product.id}`} className="block h-full">
-                <Card className="group hover:shadow-2xl transition justify-between duration-300 py-0 h-full flex-col border-gray-300 gap-0">
-                    {product.images && product.images[0] && (
-                        <div className="relative h-80 w-full">
-                            <Image 
-                                src={product.images[0]} 
-                                alt={product.name}
-                                fill
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                loading="eager"
-                                className="group-hover:opacity-90 transition-opacity duration-300 rounded-t-lg object-cover object-[center_10%]"
-                            />
-                        </div>
-                    )}
+        <Link href={`/products/${product.id}`} className="block h-full group">
+            <Card className="h-full flex flex-col overflow-hidden border border-zinc-150 bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                
+                {product.images && product.images[0] && (
+                    <div className="relative w-full aspect-square overflow-hidden bg-zinc-50 border-b border-zinc-100 shrink-0">
+                        <Image 
+                            src={product.images[0]} 
+                            alt={product.name}
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                            loading="eager"
+                            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                        />
+                    </div>
+                )}
 
-                    <CardHeader className="p-4">
-                        <CardTitle className="text-xl font-bold line-clamp-2 h-14 text-gray-800">
+                <div className="flex flex-col grow p-4 gap-2">
+                    
+                    <CardHeader className="p-0">
+                        <CardTitle className="text-base font-bold tracking-tight text-zinc-900 line-clamp-2 min-h-11 leading-snug">
                             {product.name}
                         </CardTitle>
-                        <CardContent className="p-4 flex-grow flex flex-col justify-between">
-                            {product.description && (
-                                <p className="text-gray-600 text-sm mb-2 line-clamp-2 overflow-hidden">{product.description}</p>
-                            )}
-                            {price && price.unit_amount && (
-                            <p className="text-xl font-semibold text-gray-900">
-                                R$ {(price.unit_amount / 100).toFixed(2)}
-                            </p>
-                            )}
-                            <Button className="mt-auto bg-black text-white"> 
-                                Mais detalhes 
-                            </Button>
-                        </CardContent>
                     </CardHeader>
-                </Card>
-            </Link>
+
+                    <CardContent className="p-0 grow">
+                        {product.description && (
+                            <p className="text-zinc-500 text-xs line-clamp-2 leading-relaxed">
+                                {product.description}
+                            </p>
+                        )}
+                    </CardContent>
+                    
+                </div>
+
+                <CardFooter className="p-4 pt-0 flex items-center justify-between mt-auto">
+                    {price && price.unit_amount && (
+                        <p className="text-base font-bold text-zinc-950">
+                            R$ {(price.unit_amount / 100).toFixed(2)}
+                        </p>
+                    )}
+                    
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 group-hover:text-black transition-colors duration-300 flex items-center gap-1">
+                        Ver mais <span>→</span>
+                    </span>
+                </CardFooter>
+            </Card>
+        </Link>
     );
 };

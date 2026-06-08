@@ -32,7 +32,7 @@ export const ProductList = ({products}: Props) => {
                     placeholder="O que você está procurando?"/>
             </div>
 
-            <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                 {filteredProduct.map((product) => {
                     return (
                         <li key={product.id}> 
